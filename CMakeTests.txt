@@ -1,0 +1,19 @@
+# -*- CMake -*-
+cmake_minimum_required(VERSION 2.8.7 FATAL_ERROR)
+
+option(TESTS "Build all tests." OFF)
+
+if(TESTS)
+  add_subdirectory(${trees_SOURCE_DIR}/thirdparty/googletest-1.7.0 ${trees_BINARY_DIR}/thirdparty/gtest)
+
+  enable_testing()
+  include_directories(${trees_SOURCE_DIR}/thirdparty/googletest-1.7.0/include)
+
+  set(tests_SOURCES
+    tests/avltree_test.cxx
+    )
+  add_executable(tests ${tests_SOURCES} ${trees_SOURCES})
+  target_link_libraries(tests gtest gtest_main)
+
+  add_test(NAME tests COMMAND tests)
+endif()
